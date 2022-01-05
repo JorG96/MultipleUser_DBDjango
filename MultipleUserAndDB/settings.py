@@ -80,16 +80,16 @@ WSGI_APPLICATION = 'MultipleUserAndDB.wsgi.application'
 DATABASES = {
     'default': {},
     'users': {
-        'ENGINE_USER': config(),
-        'NAME_USER': config(),
-        'USER_USER': config(),
-        'PASSWORD_USER': config(),
+        'ENGINE': config('ENGINE_USER'),
+        'NAME': config('NAME_USER'),
+        'USER': config('USER_USER'),
+        'PASSWORD': config('PASSWORD_USER'),
     },
     'listings': {
-        'ENGINE_LISTING': config(),
-        'NAME_LISTING': config(),
-        'USER_LISTING': config(),
-        'PASSWORD_LISTING': config(),
+        'ENGINE': config('ENGINE_LISTING'),
+        'NAME': config('NAME_LISTING'),
+        'USER': config('USER_LISTING'),
+        'PASSWORD': config('PASSWORD_LISTING'),
     }
 }
 
