@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from decouple import config
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-scdsewsx51)w-e-%=vsckid*3w%dpwkxupzx65&5xej562r@6s'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -79,16 +80,16 @@ WSGI_APPLICATION = 'MultipleUserAndDB.wsgi.application'
 DATABASES = {
     'default': {},
     'users': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'RE_users',
-        'USER': 'postgres',
-        'PASSWORD': 'password123'
+        'ENGINE_USER': config(),
+        'NAME_USER': config(),
+        'USER_USER': config(),
+        'PASSWORD_USER': config(),
     },
     'listings': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'RE_listings',
-        'USER': 'postgres',
-        'PASSWORD': 'password123'
+        'ENGINE_LISTING': config(),
+        'NAME_LISTING': config(),
+        'USER_LISTING': config(),
+        'PASSWORD_LISTING': config(),
     }
 }
 
