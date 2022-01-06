@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -80,18 +80,20 @@ WSGI_APPLICATION = 'MultipleUserAndDB.wsgi.application'
 DATABASES = {
     'default': {},
     'users': {
-        'ENGINE': config('ENGINE_USER'),
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('NAME_USER'),
         'USER': config('USER_USER'),
         'PASSWORD': config('PASSWORD_USER'),
     },
     'listings': {
-        'ENGINE': config('ENGINE_LISTING'),
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('NAME_LISTING'),
         'USER': config('USER_LISTING'),
         'PASSWORD': config('PASSWORD_LISTING'),
     }
 }
+
+DATABASE_ROUTERS=['user.router.AuthRouter',]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -156,3 +158,5 @@ SIMPLE_JWT = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL='user.UserAccount'
