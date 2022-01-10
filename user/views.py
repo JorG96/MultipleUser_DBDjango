@@ -15,7 +15,19 @@ class RegisterView():
             password=['password']
             re_password=['re_password']
             is_realtor =data['is_realtor']
-            
+
+            if is_realtor=='True':
+                is_realtor=True
+            else:
+                is_realtor=False
+            if password==re_password:
+                #TODO: validate password
+            else:
+                return Response(
+                    {'error':'Passwords do not match'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
         except:
             return Response(
                 {'error':'Something went wrong when registering an account'},
