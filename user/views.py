@@ -1,9 +1,11 @@
-from os import name
+from os import name, stat
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
+from django.contrib.auth import get_user_model
 
+User= get_user_model()
 
 class RegisterView():
     permission_classes =(permissions.AllowAny,)
@@ -12,6 +14,7 @@ class RegisterView():
             data =request.data
             name=data['name']
             email=data['email']
+            email=email.lower()
             password=['password']
             re_password=['re_password']
             is_realtor =data['is_realtor']
@@ -21,7 +24,30 @@ class RegisterView():
             else:
                 is_realtor=False
             if password==re_password:
-                #TODO: validate password
+                if len(password)>=8:
+                    if not User.objects.filter(email=email).exists():
+                        if not is_realtor:
+                            User.objects.create_user(name=name,email=email,password=password)
+                            return Response(
+                                {'success':'User created successfully'},
+                                status=status.HTTP_201_CREATED
+                                )
+                        else:
+                            User.objects.create_realtor(name=name,email=email,password=password)
+                            return Response(
+                                {'success':'Realtor account created successfully'},
+                                status=status.HTTP_201_CREATED
+                                )
+                    else:
+                        return Response(
+                            {'error':'User this email already exists'},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )                 
+                else:
+                    return Response(
+                        {'error':'Passwords must be at least 8 characters in length'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )                   
             else:
                 return Response(
                     {'error':'Passwords do not match'},
