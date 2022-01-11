@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 from django.contrib.auth import get_user_model
+from .serializers import UserSerializer
 
 User= get_user_model()
 
@@ -57,5 +58,20 @@ class RegisterView():
         except:
             return Response(
                 {'error':'Something went wrong when registering an account'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class RetrieveUserView(APIView):
+    def get(self,request,format=None):
+        try:
+            user=request.user
+            user= UserSerializer(user)
+            return Response(
+                {'user':user.data},
+                status=status.HTTP_200_OK
+            )
+        except:
+            return Response(
+                {'error':'Something went wrong when retrieving user details'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
