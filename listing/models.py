@@ -9,7 +9,7 @@ class Listing(models.Model):
     class HomeType(models.TextChoices):
         HOUSE='House'
         CONDO='Condo'
-        TOWNHOUSE='TownHouse'
+        BUILDING='Building'
     
     realtor = models.EmailField(max_length=255)
     title = models.CharField(max_length=255)
