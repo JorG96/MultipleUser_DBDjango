@@ -350,9 +350,7 @@ class ManageListingView(APIView):
                     {'error': 'User does not have necessary permissions for deleting this listing data'},
                     status=status.HTTP_403_FORBIDDEN
                 )
-
             data = request.data
-
             try:
                 slug = data['slug']
             except:
@@ -373,11 +371,13 @@ class ManageListingView(APIView):
                 return Response(
                     status=status.HTTP_204_NO_CONTENT
                 )
+
             else:
                 return Response(
                     {'error': 'Failed to delete listing'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
+                
         except:
             return Response(
                 {'error': 'Something went wrong when deleting listing'},
