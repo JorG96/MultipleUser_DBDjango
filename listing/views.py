@@ -491,7 +491,7 @@ class SearchListingsView(APIView):
             elif home_type == 'CONDO':
                 home_type = 'Condo'
             else:
-                home_type = 'Townhouse'
+                home_type = 'Building'
 
             search = request.query_params.get('search')
             if not search:
